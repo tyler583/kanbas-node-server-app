@@ -1,15 +1,15 @@
-import mongoose from 'mongoose';
-
-const courseSchema = new mongoose.Schema(
-    {
-        number: { type: String, required: true },
-        name: { type: String, required: true },
-        startDate: { type: Date, required: true },
-        endDate: { type: Date, required: true },
-        department: { type: String, required: true },
-        credits: { type: Number, required: true },
-        description: { type: String, required: true }
-    },
-    { collection: "courses" }
+import mongoose from "mongoose";
+const coursesSchema = new mongoose.Schema({
+    _id: { type: String, index: false},
+    name: { type: String},
+    number: String,
+    startDate: Date,
+    endDate: Date,
+    department: String,
+    credits: Number,
+    image: String,
+    description: String,
+  },
+  { collection: "courses" }
 );
-export default courseSchema;
+export default coursesSchema;
