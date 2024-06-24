@@ -18,7 +18,8 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: process.env.NETLIFY_URL || "http://localhost:3000",
+    // origin: process.env.NETLIFY_URL || "http://localhost:3000",
+    origin: "https://a6fin--friendly-nasturtium-01b19c.netlify.app",
   })
 );
 
