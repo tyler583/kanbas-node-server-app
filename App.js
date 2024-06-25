@@ -13,13 +13,13 @@ const CONNECTION_STRING =
 mongoose.connect(CONNECTION_STRING);
 
 import session from "express-session";
+import QuizRoutes from "./Kanbas/quizzes/routes.js";
 
 const app = express();
 app.use(
   cors({
     credentials: true,
-    // origin: process.env.NETLIFY_URL || "http://localhost:3000",
-    origin: "https://a6fin--friendly-nasturtium-01b19c.netlify.app",
+    origin: process.env.NETLIFY_URL || "http://localhost:3000",
   })
 );
 
@@ -46,5 +46,6 @@ Lab5(app);
 CourseRoutes(app);
 ModuleRoutes(app);
 UserRoutes(app);
+QuizRoutes(app);
 
 app.listen(process.env.PORT || 4000);
