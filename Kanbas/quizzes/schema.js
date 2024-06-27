@@ -1,80 +1,34 @@
-// import mongoose from "mongoose";
-
-// const quizzesSchema = new mongoose.Schema({
-//     _id: { type: String, index: false},
-//     title: String,
-//     description: String,
-//     quizType: {
-//         type: String, 
-//         default: "graded quiz",
-//         enum: ["graded quiz", "practice quiz", "graded survey", "ungraded survey"]
-//     },
-//     points: Number,
-//     assignmentGroup: {
-//         type: String, 
-//         default: "quizzes",
-//         enum: ["quizzes", "exams", "assignments", "project"]
-//     },
-//     shuffleAnswers: {
-//         type: Boolean, 
-//         default: true 
-//     },
-//     timeLimit: {
-//         type: Boolean, 
-//         default: true
-//     },
-//     multipleAttempts: {
-//         type: Boolean, 
-//         default: false
-//     },
-//     howManyAttempts: {
-//         type: Number,
-//         default: 1
-//     },
-//     showCorrectAnswers: Boolean,
-//     accessCode: String,
-//     oneQuestionAtATime: {
-//         type: Boolean, 
-//         default: true
-//     },
-//     webcamRequired: {
-//         type: Boolean, 
-//         default: false
-//     },
-//     lockQuestionsAfterAnswering: {
-//         type: Boolean, 
-//         default: true
-//     },
-//     dueDate: String,
-//     availableDate: String,
-//     untilDate: String,
-
-//   },
-//   { collection: "quizzes" }
-// );
-// export default quizzesSchema;
-
 import mongoose from "mongoose";
+
+const questionSchema = new mongoose.Schema({
+    id: String,
+    questionType:  {
+        type: String, 
+        enum: ["Multiple Choice", "True/False", "Fill"],
+        default: "Multiple Choice" 
+    },
+    questionTitle: String,
+    questionDescription: String,
+    questionPoints: Number,
+    correctAnswer: String,
+    options: [],
+}, { _id: false });
+
 const quizzesSchema = new mongoose.Schema({
     _id: { type: String, index: false},
     title: { type: String, required: true},
-    course: { type: String, required: true},
-    due: String,
-    availableFrom: String,
-    availableUntil: String,
-    questions: Array,
-    points: Number,
+    courseNumber: { type: String, required: true},
     quizType: {
         type: String, 
-        enum: ["graded quiz", "practice quiz", "graded survey", "ungraded survey"],
-        default: "graded quiz" 
+        enum: ["Graded Quiz", "Practice Quiz", "Graded Survey", "Ungraded Survey"],
+        default: "Graded Quiz" 
     },
+    points: Number,
     assignmentGroup: {
         type: String, 
-        enum: ["assignments", "quizzes", "exams", "project"],
-        default: "quizzes" 
+        enum: ["Assignments", "Quizzes", "Exams", "Project"],
+        default: "Quizzes" 
     },
-    instructions: String,
     shuffleAnswers: {
         type: Boolean, 
         default: true 
@@ -83,13 +37,12 @@ const quizzesSchema = new mongoose.Schema({
         type: Boolean, 
         default: true
     },
-    minutes: String,
-    allowMultipleAttempts: {
+    minutes: {type: String, default: "20"},
+    multipleAttempts: {
         type: Boolean, 
         default: false
     },
-    assignTo: String,
-    status: String,
+    allowedAttempts: {type: Number, default: 1},
     showCorrectAnswers: {
         type: Boolean,
         default: true
@@ -107,22 +60,19 @@ const quizzesSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    requiredToViewResults: {
-        type: Boolean, 
-        default: false
-    },
-    requireLockdownBrowser: {
-        type: Boolean,
-        default: false
-    },
-    viewResponses: {
-        type: Boolean,
-        default: true
-    },
-    attemptsAllowed: {
-        type: Number,
-        default: 1
-    }
+    due: String,
+    availableFrom: String,
+    availableUntil: String,
+   
+    assignTo: { type: String, default: "Everyone" },
+    published: { type: String, default: "unpublished" },
+    requiredToViewResults: { type: Boolean, default: false },
+    requireLockdownBrowser: { type: Boolean, default: false },
+    viewResponses: { type: Boolean, default: true },
+    attemptNumber: { type: Number, default: 0 },
+    questions: { type: [questionSchema], default: [] },
+    instructions: { type: String, default: "" }
+
   },
   { collection: "quizzes" }
 );
